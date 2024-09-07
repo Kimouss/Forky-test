@@ -1,5 +1,7 @@
 twig:
     file_name_pattern: '*.twig'
+    globals:
+        menuService: '@App\Service\Twig\MenuService'
 
 when@test:
     twig:
