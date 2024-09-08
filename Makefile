@@ -66,6 +66,7 @@ db: ## Reset the database and load fixtures
 	$(SYMFONY) doctrine:database:create --if-not-exists
 	$(SYMFONY) doctrine:migration:migrate -n
 	$(SYMFONY) doctrine:fixtures:load -n
+	$(SYMFONY) app:sync:permission
 	@echo '\033[1;32mDatabase up\033[0m';
 
 db_test: ## Reset the test database and load fixtures

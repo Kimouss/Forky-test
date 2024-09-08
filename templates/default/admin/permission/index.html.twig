@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Permission Index{% endblock %}
+
+{% block body %}
+    <h1>Permissions</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Base Route</th>
+            {% for profileName, access in permissionMatrix|first %}
+                <th>{{ profileName|split('-')[1] }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for baseRoute, permissions in permissionMatrix %}
+            <tr>
+                <td>{{ baseRoute }}</td>
+                {% for profileName, access in permissions %}
+                    <td>
+                        {% for route, isEnabled in access %}
+                            <div class="form-check">
+                                <input class="form-check-input permission-checkbox" type="checkbox"
+                                       {% if isEnabled %}checked{% endif %}
+                                       data-route="{{ route }}"
+                                       data-profile="{{ profileName|split('-')[0] }}"
+                                       id="{{ route }}-{{ profileName|split('-')[0] }}">
+                                <label class="form-check-label" for="{{ route }}-{{ profileName|split('-')[0] }}">
+                                    {{ route }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.permission-checkbox');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const route = this.dataset.route;
+                    const profileId = this.dataset.profile;
+                    const isEnabled = this.checked;
+
+                    fetch('{{ path('app_permission_update') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-Token': '{{ csrf_token('permission_update') }}',
+                        },
+                        body: JSON.stringify({
+                            route: route,
+                            profileId: profileId,
+                            isEnabled: isEnabled,
+                        })
+                    }).then(response => {
+                        if (response.ok) {
+                            console.log('Permission updated successfully');
+                        } else {
+                            console.error('Failed to update permission');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

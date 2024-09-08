@@ -15,6 +15,7 @@ class MenuFixtures extends Fixture
             ->setLabel('Home')
             ->setActive(true)
             ->setPosition(100)
+            ->setVisible(true)
         ;
         $manager->persist($parentHomeMenu);
         $manager->flush();
@@ -22,23 +23,35 @@ class MenuFixtures extends Fixture
         $homeMenu = new Menu();
         $homeMenu
             ->setLabel('Home index')
-            ->setRoute('app_home')
+            ->setRoute('app_home_index')
             ->setParent($parentHomeMenu)
             ->setActive(true)
             ->setPosition(101)
+            ->setVisible(true)
         ;
 
         $otherMenu = new Menu();
         $otherMenu
             ->setLabel('Home other')
-            ->setRoute('app_other')
+            ->setRoute('app_home_other')
             ->setParent($parentHomeMenu)
             ->setActive(true)
             ->setPosition(102)
+            ->setVisible(true)
+        ;
+
+        $testMenu = new Menu();
+        $testMenu
+            ->setLabel('Test')
+            ->setRoute('app_test_index')
+            ->setActive(true)
+            ->setPosition(200)
+            ->setVisible(true)
         ;
 
         $manager->persist($homeMenu);
         $manager->persist($otherMenu);
+        $manager->persist($testMenu);
         $manager->flush();
     }
 }

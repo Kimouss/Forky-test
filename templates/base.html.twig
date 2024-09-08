@@ -41,7 +41,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
-                            {% for menu in menuService.getAll() %}
+                            {% for menu in menuService.getAll(app.user) %}
                                 {{ _self.render_menu_item(menu) }}
                             {% endfor %}
 
@@ -54,7 +54,7 @@
                                         <li>
                                             <a class="dropdown-item" href="{{ path('app_menu_index') }}">Menu</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_permission_index') }}">Permission</a></li>
                                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                                     </ul>
                                 </li>

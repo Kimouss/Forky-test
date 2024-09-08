@@ -39,6 +39,9 @@ class Menu
     #[ORM\Column]
     private ?int $position = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isVisible = false;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -135,6 +138,18 @@ class Menu
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function isVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setVisible(bool $isVisible): static
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }

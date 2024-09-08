@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Label</th>
+                <th>Parent</th>
                 <th>Route</th>
                 <th>IsActive</th>
                 <th>actions</th>
@@ -20,6 +21,7 @@
             <tr>
                 <td>{{ menu.id }}</td>
                 <td>{{ menu.label }}</td>
+                <td>{% if menu.parent %}{{ menu.parent.label }}{% else %}No parent{% endif %}</td>
                 <td>{{ menu.route }}</td>
                 <td>{{ menu.isActive ? 'Yes' : 'No' }}</td>
                 <td>

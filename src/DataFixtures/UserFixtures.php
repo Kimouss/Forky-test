@@ -36,7 +36,17 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setProfile($adminProfile)
         ;
 
+        $testProfile = $this->getReference(ProfileFixtures::PROFILE_TEST);
+        $test = new User();
+        $test
+            ->setEmail('test@mail.com')
+            ->setPassword($this->passwordHasher->hashPassword($test, 'password'))
+            ->setRoles($testProfile->getRoles())
+            ->setProfile($testProfile)
+        ;
+
         $manager->persist($user);
+        $manager->persist($test);
         $manager->persist($admin);
         $manager->flush();
     }
