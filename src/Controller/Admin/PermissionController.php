@@ -27,8 +27,10 @@ final class PermissionController extends AbstractController
             if ($profile instanceof Profile) {
                 $profileName = $profile->getId().'-'.$profile->getName();
                 $permissionMatrix[$permission->getBaseRoute()][$profileName] = $permission->getAccess();
+                ksort($permissionMatrix[$permission->getBaseRoute()]);
             }
         }
+
 
         return $this->render('default/admin/permission/index.html.twig', [
             'permissionMatrix' => $permissionMatrix,

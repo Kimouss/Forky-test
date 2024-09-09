@@ -46,7 +46,7 @@ final readonly class KernelRequestListener
             return;
         }
 
-        if (!$this->authorizationChecker->isGranted(AccessVoter::ACCESS_ROUTE)) {
+        if ($currentRoute !== null && !$this->authorizationChecker->isGranted(AccessVoter::ACCESS_ROUTE)) {
             throw new AccessDeniedHttpException('Access Denied.');
         }
     }
